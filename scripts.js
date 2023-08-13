@@ -4,8 +4,15 @@ let currentOperator = "";
 let previousInput = "";
 
 function updateDisplay() {
+    const maxLength = 10;
+
+    if (currentInput.length > maxLength) {
+        currentInput = currentInput.slice(0, maxLength);
+    }
+
     displayElement.textContent = currentInput;
 }
+
 
 function clearCalculator() {
     currentInput = "0";
