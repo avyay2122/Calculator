@@ -1,83 +1,55 @@
-const displayElement = document.getElementById("display");
-let currentInput = "0";
-let currentOperator = "";
-let previousInput = "";
-
-function updateDisplay() {
-    displayElement.textContent = currentInput;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #eaeaea;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-function clearCalculator() {
-    currentInput = "0";
-    currentOperator = "";
-    previousInput = "";
-    updateDisplay();
+.calculator {
+    width: 260px;
+    background-color: #ff8888;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-function handleNumberClick(number) {
-    if (currentInput === "0" || currentInput === "Error") {
-        currentInput = number;
-    } else {
-        currentInput += number;
-    }
-    updateDisplay();
+.screen {
+    grid-column: 1 / -1;
+    font-size: 32px;
+    color: #333;
+    background-color: #ff8888;
+    text-align: right;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-function handleOperatorClick(operator) {
-    if (currentOperator !== "") {
-        performCalculation();
-    }
-    currentOperator = operator;
-    previousInput = currentInput;
-    currentInput = "0";
+.button, .clear, .equal {
+    font-size: 24px;
+    background-color: #444;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-function performCalculation() {
-    const previous = parseFloat(previousInput);
-    const current = parseFloat(currentInput);
-    switch (currentOperator) {
-        case "+":
-            currentInput = (previous + current).toString();
-            break;
-        case "-":
-            currentInput = (previous - current).toString();
-            break;
-        case "*":
-            currentInput = (previous * current).toString();
-            break;
-        case "/":
-            if (current === 0) {
-                currentInput = "Error";
-            } else {
-                currentInput = (previous / current).toString();
-            }
-            break;
-        default:
-            return;
-    }
-    currentOperator = "";
-    updateDisplay();
+.operator {
+    background-color: #ff6666;
+    color: #333;
 }
 
-function handleEqualClick() {
-    if (currentOperator !== "") {
-        performCalculation();
-    }
+.button:hover {
+    background-color: #555;
 }
 
-function handleButtonClick(event) {
-    const buttonValue = event.target.getAttribute("data-value");
-    if (buttonValue === "C") {
-        clearCalculator();
-    } else if (buttonValue === "=") {
-        handleEqualClick();
-    } else if (isNaN(buttonValue) || buttonValue === "+" || buttonValue === "-" || buttonValue === "*" || buttonValue === "/") {
-        handleOperatorClick(buttonValue);
-    } else {
-        handleNumberClick(buttonValue);
-    }
+.button:active {
+    background-color: #333;
 }
-
-document.querySelectorAll(".button, .equal").forEach(button => {
-    button.addEventListener("click", handleButtonClick);
-});
