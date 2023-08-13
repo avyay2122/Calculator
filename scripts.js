@@ -71,13 +71,13 @@ function handleButtonClick(event) {
         clearCalculator();
     } else if (buttonValue === "=") {
         handleEqualClick();
-    } else if (isNaN(buttonValue)) {
+    } else if (isNaN(buttonValue) || buttonValue === "+" || buttonValue === "-" || buttonValue === "*" || buttonValue === "/") {
         handleOperatorClick(buttonValue);
     } else {
         handleNumberClick(buttonValue);
     }
 }
 
-document.querySelectorAll(".button").forEach(button => {
+document.querySelectorAll(".button, .equal").forEach(button => {
     button.addEventListener("click", handleButtonClick);
 });
